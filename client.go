@@ -1,11 +1,13 @@
 package i18n
 
 import (
+	"errors"
 	"net/http"
 	"time"
 
 	"github.com/volatile/core"
 	"github.com/volatile/core/httputil"
+	"github.com/volatile/core/log"
 )
 
 // GetLocale returns the current locale for the client and sets it if it's not already done.
@@ -39,6 +41,8 @@ func SetLocale(c *core.Context, l string) {
 			})
 		}
 		c.Data[contextDataKey] = l
+	} else {
+		log.Stack(errors.New("locale " + l + " doesn't exists"))
 	}
 }
 
