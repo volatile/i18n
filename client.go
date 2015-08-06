@@ -28,7 +28,7 @@ func GetLocale(c *core.Context) string {
 	return l
 }
 
-// SetLocale changes the locale for the actual client, but only if the locale is available.
+// SetLocale changes the locale for the actual client, but only if the locale exists.
 func SetLocale(c *core.Context, l string) {
 	if localeExists(l) {
 		if useCookie {

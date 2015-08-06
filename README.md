@@ -124,8 +124,9 @@ response.ViewsFuncs(i18n.ViewsFuncs)
 
 ### Get current locale
 
-Use [`GetLocale`](https://godoc.org/github.com/volatile/i18n#GetLocale) to the current locale for the client.
+Use [`GetLocale`](https://godoc.org/github.com/volatile/i18n#GetLocale) to get the current locale for the client.
 
 ### Set current locale
 
-Use [`SetLocale`](https://godoc.org/github.com/volatile/i18n#SetLocale) to manually set the locale for the client.
+Use [`SetLocale`](https://godoc.org/github.com/volatile/i18n#SetLocale) to manually set the locale for the client.  
+The change is ignored if the provided locale doesn't exists.
