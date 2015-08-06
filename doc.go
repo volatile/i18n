@@ -69,18 +69,18 @@ In "views/hello.gohtml":
 
 Translations
 
-Use i18n.Trans(*core.Context, string, ...interface{}) to get the translation for the client matched locale.
-The string parameter is the translation key.
+Use Trans to get the translation for the client matched locale.
 If the translation value contains format verbs (like %s or %d), the last variadic receives the content for them.
 
-When the translation associated to key doesn't exist, an empty string is returned en production mode. Otherwise, the key is returned.
+When the translation associated to key doesn't exist, an empty string is returned in production mode (otherwise, the key).
 
 Pluralization
-i18n.TransN(*core.Context, string, int, ...interface{}) works like Trans but it tries to find the best form following a number of elements.
-The third parameter is the number of elements.
 
-The translation can have 3 forms: zero, one, other. They are defined at the end of the key: "myTranslationKey.zero".
-If the TransNPlaceholder is used in the translation, the number of elements will take this place.
+TransN works like Trans but it tries to find the best translation form, following a number of elements.
+
+A pluralized translation has 3 forms: zero, one, other.
+They are defined at the end of the key: "myTranslationKey.zero", "myTranslationKey.one". and "myTranslationKey.other".
+If TransNPlaceholder is used in the translation, the number of elements will take this place.
 
 Translation example:
 
@@ -92,27 +92,27 @@ Function example:
 
 	i18n.TransN(c, "apple", 7)
 
-Results in There are 7 apples.
+…results in "There are 7 apples".
 
 Numbers
 
-Use Num(*core.Context, interface{}) the get a formatted number with decimal and thousands marks.
-The special decimalMark and thousandsMark fields will be used from the matched locale.
+Use #Num to get a formatted number with decimal and thousands marks.
+If set, the special "decimalMark" and "thousandsMark" keys will be used from the matched locale.
 
 Views functions
 
-To use internationalization in templates, i18n.ViewsFuncs provides a map of all functions.
+ViewsFuncs provides a map of all functions usable in templates.
 
 Example with the [Response](https://github.com/volatile/response) package:
 
 	response.ViewsFuncs(i18n.ViewsFuncs)
 
-In your templates, you can now use these functions:
+Get current locale
 
-- trans for Trans
+Use GetLocale to the current locale for the client.
 
-- transn for TransN
+Set current locale
 
-- num for Num
+Use SetLocale to manually set the locale for the client.
 */
 package i18n

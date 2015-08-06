@@ -20,7 +20,7 @@ func TransN(c *core.Context, key string, n int, a ...interface{}) string {
 }
 
 func trans(c *core.Context, count int, key string, a []interface{}) string {
-	if locale, ok := locales[clientLocale(c)]; ok {
+	if locale, ok := locales[GetLocale(c)]; ok {
 		if count == 0 {
 			if v, ok := locale[key+".zero"]; ok {
 				return fmt.Sprintf(v, a...)

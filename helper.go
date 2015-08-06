@@ -29,9 +29,11 @@ var (
 
 // ViewsFuncs adds internationalization functions to views.
 var ViewsFuncs = map[string]interface{}{
-	"num":    Num,
-	"trans":  Trans,
-	"transn": TransN,
+	"getLocale":        GetLocale,
+	"num":              Num,
+	"sortedLocaleKeys": SortedLocaleKeys,
+	"trans":            Trans,
+	"transn":           TransN,
 }
 
 // Use registers locales l.

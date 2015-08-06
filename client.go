@@ -8,8 +8,8 @@ import (
 	"github.com/volatile/core/httputil"
 )
 
-// clientLocale saves the most appropriate and available locale key for the client and returns it.
-func clientLocale(c *core.Context) string {
+// GetLocale returns the current locale for the client and sets it if it's not already done.
+func GetLocale(c *core.Context) string {
 	// Use context data to match locale a single time per request.
 	if v, ok := c.Data[contextDataKey]; ok {
 		return v.(string)
@@ -24,15 +24,22 @@ func clientLocale(c *core.Context) string {
 
 	// Match, save and return locale key.
 	l := matchLocale(c.Request)
-	if useCookie {
-		http.SetCookie(c.ResponseWriter, &http.Cookie{
-			Name:    cookieName,
-			Value:   l,
-			Expires: time.Now().Add(3 * 365 * 24 * time.Hour), // 3 years cookie
-		})
-	}
-	c.Data[contextDataKey] = l
+	SetLocale(c, l)
 	return l
+}
+
+// SetLocale changes the locale for the actual client, but only if the locale is available.
+func SetLocale(c *core.Context, l string) {
+	if localeExists(l) {
+		if useCookie {
+			http.SetCookie(c.ResponseWriter, &http.Cookie{
+				Name:    cookieName,
+				Value:   l,
+				Expires: time.Now().Add(3 * 365 * 24 * time.Hour), // 3 years cookie
+			})
+		}
+		c.Data[contextDataKey] = l
+	}
 }
 
 // matchLocale returns the most appropriate and available locale key for the client.
