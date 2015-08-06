@@ -89,7 +89,7 @@ When the translation associated to key doesn't exist, an empty string is returne
 [`TransN`](https://godoc.org/github.com/volatile/i18n#TransN) works like [`Trans`](https://godoc.org/github.com/volatile/i18n#Trans) but it tries to find the best translation form, following a number of elements.
 
 A pluralized translation has 3 forms: zero, one, other.  
-They are defined at the end of the key: `myTranslationKey.zero`, `myTranslationKey.one`. and `myTranslationKey.other`.  
+They are defined at the end of the key: `myTranslationKey.zero`, `myTranslationKey.one` and `myTranslationKey.other`.  
 If [`TransNPlaceholder`](https://godoc.org/github.com/volatile/i18n#pkg-constants) is used in the translation, the number of elements will take this place.
 
 Translation example:

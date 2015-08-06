@@ -79,7 +79,7 @@ Pluralization
 TransN works like Trans but it tries to find the best translation form, following a number of elements.
 
 A pluralized translation has 3 forms: zero, one, other.
-They are defined at the end of the key: "myTranslationKey.zero", "myTranslationKey.one". and "myTranslationKey.other".
+They are defined at the end of the key: "myTranslationKey.zero", "myTranslationKey.one" and "myTranslationKey.other".
 If TransNPlaceholder is used in the translation, the number of elements will take this place.
 
 Translation example:
