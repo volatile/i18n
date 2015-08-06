@@ -4,7 +4,7 @@ It provides internationalization functions following the client preferences.
 
 Usage
 
-Full example:
+Example:
 
 	package main
 
