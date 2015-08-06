@@ -1,5 +1,5 @@
 /*
-Package i18n is a helper for the Core.
+Package i18n is a helper for the Core (https://github.com/volatile/core).
 It provides internationalization functions following the client preferences.
 
 Usage
