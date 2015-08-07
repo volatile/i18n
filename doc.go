@@ -109,11 +109,11 @@ Example with the [Response](https://github.com/volatile/response) package:
 
 Get current locale
 
-Use GetLocale to get the current locale for the client.
+Use ClientLocale to get the locale used by the client.
 
 Set current locale
 
-Use SetLocale to manually set the locale for the client.
+Use SetClientLocale to manually set the locale used by client.
 The change is ignored if the provided locale doesn't exists.
 */
 package i18n

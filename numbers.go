@@ -12,43 +12,43 @@ import (
 func Num(c *core.Context, n interface{}) string {
 	switch n.(type) {
 	case uint:
-		return fmtNum(c, []byte(strconv.FormatUint(uint64(n.(uint)), 10)))
+		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint)), 10)))
 	case uint8:
-		return fmtNum(c, []byte(strconv.FormatUint(uint64(n.(uint8)), 10)))
+		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint8)), 10)))
 	case uint16:
-		return fmtNum(c, []byte(strconv.FormatUint(uint64(n.(uint16)), 10)))
+		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint16)), 10)))
 	case uint32:
-		return fmtNum(c, []byte(strconv.FormatUint(uint64(n.(uint32)), 10)))
+		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint32)), 10)))
 	case uint64:
-		return fmtNum(c, []byte(strconv.FormatUint(n.(uint64), 10)))
+		return formatNum(c, []byte(strconv.FormatUint(n.(uint64), 10)))
 	case int:
-		return fmtNum(c, []byte(strconv.Itoa(n.(int))))
+		return formatNum(c, []byte(strconv.Itoa(n.(int))))
 	case int8:
-		return fmtNum(c, []byte(strconv.FormatInt(int64(n.(int8)), 10)))
+		return formatNum(c, []byte(strconv.FormatInt(int64(n.(int8)), 10)))
 	case int16:
-		return fmtNum(c, []byte(strconv.FormatInt(int64(n.(int16)), 10)))
+		return formatNum(c, []byte(strconv.FormatInt(int64(n.(int16)), 10)))
 	case int32:
-		return fmtNum(c, []byte(strconv.FormatInt(int64(n.(int32)), 10)))
+		return formatNum(c, []byte(strconv.FormatInt(int64(n.(int32)), 10)))
 	case int64:
-		return fmtNum(c, []byte(strconv.FormatInt(n.(int64), 10)))
+		return formatNum(c, []byte(strconv.FormatInt(n.(int64), 10)))
 	case float32:
 		println(strconv.FormatFloat(float64(n.(float32)), 'f', 8, 32))
-		return fmtNum(c, []byte(strconv.FormatFloat(float64(n.(float32)), 'f', -1, 32)))
+		return formatNum(c, []byte(strconv.FormatFloat(float64(n.(float32)), 'f', -1, 32)))
 	case float64:
-		return fmtNum(c, []byte(strconv.FormatFloat(n.(float64), 'f', -1, 64)))
+		return formatNum(c, []byte(strconv.FormatFloat(n.(float64), 'f', -1, 64)))
 	case string:
-		return fmtNum(c, []byte(n.(string)))
+		return formatNum(c, []byte(n.(string)))
 	case []byte:
-		return fmtNum(c, n.([]byte))
+		return formatNum(c, n.([]byte))
 	default:
 		return ""
 	}
 }
 
-func fmtNum(c *core.Context, b []byte) (s string) {
+func formatNum(c *core.Context, b []byte) (s string) {
 	decimalMark := "."
 	thousandsMark := ","
-	if locale, ok := locales[GetLocale(c)]; ok {
+	if locale, ok := locales[ClientLocale(c)]; ok {
 		if v, ok := locale["decimalMark"]; ok {
 			decimalMark = v
 		}

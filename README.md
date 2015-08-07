@@ -122,11 +122,11 @@ Example with the [Response](https://github.com/volatile/response) package:
 response.ViewsFuncs(i18n.ViewsFuncs)
 ```
 
-### Get current locale
+### Get client locale
 
-Use [`GetLocale`](https://godoc.org/github.com/volatile/i18n#GetLocale) to get the current locale for the client.
+Use [`ClientLocale`](https://godoc.org/github.com/volatile/i18n#ClientLocale) to get the locale used by the client.
 
-### Set current locale
+### Set client locale
 
-Use [`SetLocale`](https://godoc.org/github.com/volatile/i18n#SetLocale) to manually set the locale for the client.  
+Use [`SetClientLocale`](https://godoc.org/github.com/volatile/i18n#SetClientLocale) to manually set the locale used by client.  
 The change is ignored if the provided locale doesn't exists.

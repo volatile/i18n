@@ -10,8 +10,8 @@ import (
 	"github.com/volatile/core/log"
 )
 
-// GetLocale returns the current locale for the client and sets it if it's not already done.
-func GetLocale(c *core.Context) string {
+// ClientLocale returns the current locale for the client and sets it if it's not already done.
+func ClientLocale(c *core.Context) string {
 	// Use context data to match locale a single time per request.
 	if v, ok := c.Data[contextDataKey]; ok {
 		return v.(string)
@@ -26,12 +26,12 @@ func GetLocale(c *core.Context) string {
 
 	// Match, save and return locale key.
 	l := matchLocale(c.Request)
-	SetLocale(c, l)
+	SetClientLocale(c, l)
 	return l
 }
 
-// SetLocale changes the locale for the actual client, but only if the locale exists.
-func SetLocale(c *core.Context, l string) {
+// SetClientLocale changes the locale for the actual client, but only if the locale exists.
+func SetClientLocale(c *core.Context, l string) {
 	if localeExists(l) {
 		if useCookie {
 			http.SetCookie(c.ResponseWriter, &http.Cookie{

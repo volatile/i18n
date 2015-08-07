@@ -29,7 +29,7 @@ var (
 
 // ViewsFuncs adds internationalization functions to views.
 var ViewsFuncs = map[string]interface{}{
-	"getLocale":        GetLocale,
+	"locale":           ClientLocale,
 	"num":              Num,
 	"sortedLocaleKeys": SortedLocaleKeys,
 	"trans":            Trans,
