@@ -2,6 +2,12 @@
 Package i18n is a helper for the Core (https://github.com/volatile/core).
 It provides internationalization functions following the client preferences.
 
+Installation
+
+In the terminal:
+
+	$ go get github.com/volatile/i18n
+
 Usage
 
 Example:
