@@ -109,7 +109,7 @@ Views functions
 
 ViewsFuncs provides a map of all functions usable in templates.
 
-Example with the [Response](https://github.com/volatile/response) package:
+Example with the Response (https://github.com/volatile/response) package:
 
 	response.ViewsFuncs(i18n.ViewsFuncs)
 
