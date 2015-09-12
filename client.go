@@ -5,8 +5,9 @@ import (
 	"net/http"
 	"time"
 
+	"golang.org/x/text/language"
+
 	"github.com/volatile/core"
-	"github.com/volatile/core/httputil"
 	"github.com/volatile/core/log"
 )
 
@@ -49,17 +50,15 @@ func SetClientLocale(c *core.Context, l string) {
 // matchLocale returns the most appropriate and available locale key for the client.
 // Content Language Headers: https://tools.ietf.org/html/rfc3282
 func matchLocale(r *http.Request) string {
-	acceptedLangs := httputil.AcceptedLanguages(r)
-	if acceptedLangs == nil {
-		return defaultLocale
+	tags, _, err := language.ParseAcceptLanguage(r.Header.Get("Accept-Language"))
+	if err != nil {
+		log.Stack(err)
 	}
 
-	for _, lang := range acceptedLangs {
-		if len(lang) >= 2 {
-			prefix := lang[:2]
-			if _, ok := locales[prefix]; ok {
-				return string(prefix)
-			}
+	for _, tag := range tags {
+		base, _ := tag.Base()
+		if _, ok := locales[base.String()]; ok {
+			return base.String()
 		}
 	}
 
