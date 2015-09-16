@@ -9,42 +9,42 @@ import (
 
 // Num returns a formatted number with decimal and thousands marks, according to the locale decimalMark and thousandsMark respectively.
 // If not set, the decimal mark is "," and the thousands mark is ".".
-func Num(c *core.Context, n interface{}) string {
+func Num(c *core.Context, n interface{}) (s string) {
+	var b []byte
+
 	switch n.(type) {
 	case uint:
-		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint)), 10)))
+		b = []byte(strconv.FormatUint(uint64(n.(uint)), 10))
 	case uint8:
-		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint8)), 10)))
+		b = []byte(strconv.FormatUint(uint64(n.(uint8)), 10))
 	case uint16:
-		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint16)), 10)))
+		b = []byte(strconv.FormatUint(uint64(n.(uint16)), 10))
 	case uint32:
-		return formatNum(c, []byte(strconv.FormatUint(uint64(n.(uint32)), 10)))
+		b = []byte(strconv.FormatUint(uint64(n.(uint32)), 10))
 	case uint64:
-		return formatNum(c, []byte(strconv.FormatUint(n.(uint64), 10)))
+		b = []byte(strconv.FormatUint(n.(uint64), 10))
 	case int:
-		return formatNum(c, []byte(strconv.Itoa(n.(int))))
+		b = []byte(strconv.Itoa(n.(int)))
 	case int8:
-		return formatNum(c, []byte(strconv.FormatInt(int64(n.(int8)), 10)))
+		b = []byte(strconv.FormatInt(int64(n.(int8)), 10))
 	case int16:
-		return formatNum(c, []byte(strconv.FormatInt(int64(n.(int16)), 10)))
+		b = []byte(strconv.FormatInt(int64(n.(int16)), 10))
 	case int32:
-		return formatNum(c, []byte(strconv.FormatInt(int64(n.(int32)), 10)))
+		b = []byte(strconv.FormatInt(int64(n.(int32)), 10))
 	case int64:
-		return formatNum(c, []byte(strconv.FormatInt(n.(int64), 10)))
+		b = []byte(strconv.FormatInt(n.(int64), 10))
 	case float32:
-		return formatNum(c, []byte(strconv.FormatFloat(float64(n.(float32)), 'f', -1, 32)))
+		b = []byte(strconv.FormatFloat(float64(n.(float32)), 'f', -1, 32))
 	case float64:
-		return formatNum(c, []byte(strconv.FormatFloat(n.(float64), 'f', -1, 64)))
+		b = []byte(strconv.FormatFloat(n.(float64), 'f', -1, 64))
 	case string:
-		return formatNum(c, []byte(n.(string)))
+		b = []byte(n.(string))
 	case []byte:
-		return formatNum(c, n.([]byte))
+		b = n.([]byte)
 	default:
-		return ""
+		return
 	}
-}
 
-func formatNum(c *core.Context, b []byte) (s string) {
 	decimalMark := "."
 	thousandsMark := ","
 	if locale, ok := locales[ClientLocale(c)]; ok {
