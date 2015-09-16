@@ -32,7 +32,6 @@ func Num(c *core.Context, n interface{}) string {
 	case int64:
 		return formatNum(c, []byte(strconv.FormatInt(n.(int64), 10)))
 	case float32:
-		println(strconv.FormatFloat(float64(n.(float32)), 'f', 8, 32))
 		return formatNum(c, []byte(strconv.FormatFloat(float64(n.(float32)), 'f', -1, 32)))
 	case float64:
 		return formatNum(c, []byte(strconv.FormatFloat(n.(float64), 'f', -1, 64)))
