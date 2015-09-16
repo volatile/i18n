@@ -65,7 +65,7 @@ func formatNum(c *core.Context, b []byte) (s string) {
 		s = decimalMark + string(bb[1])
 		b = bb[0]
 	default:
-		return "" // Can't have 2 decimal marks in a number so return nothing.
+		return // Can't have 2 decimal marks in a number so return nothing.
 	}
 
 	j := 0
