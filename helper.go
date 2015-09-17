@@ -59,6 +59,7 @@ func Use(l *Locales, def string, cookie bool) {
 	// Trigger ClientLocale to match and set locale at least one time.
 	core.Use(func(c *core.Context) {
 		ClientLocale(c)
+		c.Next()
 	})
 }
 
