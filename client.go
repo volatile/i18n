@@ -3,7 +3,6 @@ package i18n
 import (
 	"errors"
 	"net/http"
-	"time"
 
 	"golang.org/x/text/language"
 
@@ -36,9 +35,10 @@ func SetClientLocale(c *core.Context, l string) {
 	if localeExists(l) {
 		if useCookie {
 			http.SetCookie(c.ResponseWriter, &http.Cookie{
-				Name:    cookieName,
-				Value:   l,
-				Expires: time.Now().Add(3 * 365 * 24 * time.Hour), // 3 years cookie
+				Name:   cookieName,
+				Value:  l,
+				Path:   "/",
+				MaxAge: 315569260, // 10 years cookie
 			})
 		}
 		c.Data[contextDataKey] = l
