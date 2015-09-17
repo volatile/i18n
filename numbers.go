@@ -47,7 +47,7 @@ func Num(c *core.Context, n interface{}) (s string) {
 
 	decimalMark := "."
 	thousandsMark := ","
-	if locale, ok := locales[ClientLocale(c)]; ok {
+	if locale, ok := (*locales)[ClientLocale(c)]; ok {
 		if v, ok := locale["decimalMark"]; ok {
 			decimalMark = v
 		}

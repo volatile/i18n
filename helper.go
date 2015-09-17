@@ -3,6 +3,8 @@ package i18n
 import (
 	"regexp"
 	"sort"
+
+	"github.com/volatile/core"
 )
 
 // Locale contains translations and special i18n values associated to unique keys.
@@ -23,7 +25,7 @@ var (
 	cookieName = "locale" // The name of the cookie used to save the client matched locale.
 
 	defaultLocale   string
-	locales         = make(Locales)
+	locales         *Locales
 	localeKeyRegexp = regexp.MustCompile("^[a-z]{2}$")
 )
 
@@ -39,25 +41,30 @@ var ViewsFuncs = map[string]interface{}{
 // Use registers locales l.
 // If none match to the client accepted languages, the def locale will be used.
 // If cookie is true, a cookie will be used to save the most appropriate and available locale key for the client.
-func Use(l Locales, def string, cookie bool) {
-	if _, ok := l[def]; !ok {
-		panic("i18n: default locale " + def + " doesn't exist")
-	}
-
-	for i, v := range l {
+func Use(l *Locales, def string, cookie bool) {
+	for i := range *l {
 		if !localeKeyRegexp.MatchString(i) {
 			panic(`i18n: locale key must be an ISO 639-1 code (2 letters lowercase), so "` + i + `" is invalid`)
 		}
-		locales[i] = v
+	}
+	locales = l
+
+	if _, ok := (*l)[def]; !ok {
+		panic("i18n: default locale " + def + " doesn't exist")
 	}
 	defaultLocale = def
 
 	useCookie = cookie
+
+	// Trigger ClientLocale to match and set locale at least one time.
+	core.Use(func(c *core.Context) {
+		ClientLocale(c)
+	})
 }
 
 // SortedLocaleKeys return the sorted keys of all available locales.
 func SortedLocaleKeys() (kk []string) {
-	for k := range locales {
+	for k := range *locales {
 		kk = append(kk, k)
 	}
 	sort.Strings(kk)

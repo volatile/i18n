@@ -57,7 +57,7 @@ func matchLocale(r *http.Request) string {
 
 	for _, tag := range tags {
 		base, _ := tag.Base()
-		if _, ok := locales[base.String()]; ok {
+		if _, ok := (*locales)[base.String()]; ok {
 			return base.String()
 		}
 	}
@@ -66,6 +66,6 @@ func matchLocale(r *http.Request) string {
 }
 
 func localeExists(l string) bool {
-	_, ok := locales[l]
+	_, ok := (*locales)[l]
 	return ok
 }
