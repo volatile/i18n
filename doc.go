@@ -21,7 +21,7 @@ Example:
 	)
 
 	func main() {
-		i18n.Use(locales, "en", true)        // Default locale local is "en" and client locale will be saved in a cookie on first match.
+		i18n.Use(&locales, "en", true)       // Default locale local is "en" and client locale will be saved in a cookie on first match.
 		response.ViewsFuncs(i18n.ViewsFuncs) // Functions for views templates
 
 		core.Use(func(c *core.Context) {
