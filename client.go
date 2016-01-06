@@ -7,7 +7,6 @@ import (
 	"golang.org/x/text/language"
 
 	"github.com/volatile/core"
-	"github.com/volatile/core/log"
 )
 
 // ClientLocale returns the current locale for the client and sets it if it's not already done.
@@ -43,7 +42,7 @@ func SetClientLocale(c *core.Context, l string) {
 		}
 		c.Data[contextDataKey] = l
 	} else {
-		log.Stack(errors.New("locale " + l + " doesn't exists"))
+		panic(errors.New("i18n: locale " + l + " doesn't exists"))
 	}
 }
 
@@ -52,7 +51,7 @@ func SetClientLocale(c *core.Context, l string) {
 func matchLocale(r *http.Request) string {
 	tags, _, err := language.ParseAcceptLanguage(r.Header.Get("Accept-Language"))
 	if err != nil {
-		log.Stack(err)
+		panic(err)
 	}
 
 	for _, tag := range tags {
