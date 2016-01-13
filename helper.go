@@ -41,7 +41,7 @@ var ViewsFuncs = map[string]interface{}{
 // On request, if none match to the client accepted languages, the locale def will be used.
 // And if useCookie is true, a cookie will be used to save the most appropriate and available locale key for the client.
 func Use(l *Locales, def string, cookie bool) {
-	if len(*locales) == 0 {
+	if l == nil {
 		panic("i18n: locales map can't be empty")
 	}
 
