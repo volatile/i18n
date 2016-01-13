@@ -29,7 +29,7 @@ var (
 	localeKeyRegexp = regexp.MustCompile("^[a-z]{2}$")
 )
 
-// ViewsFuncs provides i18n functions to be set for templates.
+// ViewsFuncs provides i18n functions that can be set for templates.
 var ViewsFuncs = map[string]interface{}{
 	"locale":           ClientLocale,
 	"num":              Num,
