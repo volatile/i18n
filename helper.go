@@ -1,10 +1,6 @@
 package i18n
 
-import (
-	"regexp"
-
-	"github.com/volatile/core"
-)
+import "regexp"
 
 // Locale contains translations and special i18n values associated to unique keys.
 type Locale map[string]string
@@ -58,10 +54,4 @@ func Use(l *Locales, def string, cookie bool) {
 	defaultLocale = def
 
 	useCookie = cookie
-
-	// Trigger ClientLocale to match and set locale at least one time.
-	core.Use(func(c *core.Context) {
-		ClientLocale(c)
-		c.Next()
-	})
 }
