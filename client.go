@@ -9,9 +9,8 @@ import (
 	"github.com/volatile/core"
 )
 
-var (
-	errUnknownLocale = errors.New("i18n: unknown locale")
-)
+// ErrUnknownLocale is returned when the wanted locale doesn't exists.
+var ErrUnknownLocale = errors.New("i18n: unknown locale")
 
 // ClientLocale returns the current locale used by the client.
 // If the locale has not been matched already, it will be done before returning.
@@ -34,10 +33,11 @@ func ClientLocale(c *core.Context) string {
 	return l
 }
 
-// SetClientLocale changes the locale for the actual client, but only if the locale exists.
+// SetClientLocale changes the locale for the actual client.
+// If the locale l doesn't exists, error ErrUnknownLocale is returned.
 func SetClientLocale(c *core.Context, l string) error {
 	if !localeExists(l) {
-		return errUnknownLocale
+		return ErrUnknownLocale
 	}
 
 	if useCookie {
