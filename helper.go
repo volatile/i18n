@@ -71,3 +71,11 @@ func SortedLocaleKeys() (kk []string) {
 	sort.Strings(kk)
 	return
 }
+
+func localeExists(l string) bool {
+	if len(*locales) == 0 {
+		return false
+	}
+	_, ok := (*locales)[l]
+	return ok
+}

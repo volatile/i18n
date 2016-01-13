@@ -9,6 +9,10 @@ import (
 	"github.com/volatile/core"
 )
 
+var (
+	errUnknownLocale = errors.New("i18n: unknown locale")
+)
+
 // ClientLocale returns the current locale used by the client.
 // If the locale has not been matched already, it will be done before returning.
 func ClientLocale(c *core.Context) string {
@@ -31,20 +35,22 @@ func ClientLocale(c *core.Context) string {
 }
 
 // SetClientLocale changes the locale for the actual client, but only if the locale exists.
-func SetClientLocale(c *core.Context, l string) {
-	if localeExists(l) {
-		if useCookie {
-			http.SetCookie(c.ResponseWriter, &http.Cookie{
-				Name:   cookieName,
-				Value:  l,
-				Path:   "/",
-				MaxAge: 315569260, // 10 years cookie
-			})
-		}
-		c.Data[contextDataKey] = l
-	} else {
-		panic(errors.New("i18n: locale " + l + " doesn't exists"))
+func SetClientLocale(c *core.Context, l string) error {
+	if !localeExists(l) {
+		return errUnknownLocale
 	}
+
+	if useCookie {
+		http.SetCookie(c.ResponseWriter, &http.Cookie{
+			Name:   cookieName,
+			Value:  l,
+			Path:   "/",
+			MaxAge: 315569260, // 10 years cookie
+		})
+	}
+
+	c.Data[contextDataKey] = l
+	return nil
 }
 
 // matchLocale returns the most appropriate and available locale key for the client.
@@ -63,9 +69,4 @@ func matchLocale(r *http.Request) string {
 	}
 
 	return defaultLocale
-}
-
-func localeExists(l string) bool {
-	_, ok := (*locales)[l]
-	return ok
 }
