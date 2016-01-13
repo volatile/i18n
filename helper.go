@@ -2,7 +2,6 @@ package i18n
 
 import (
 	"regexp"
-	"sort"
 
 	"github.com/volatile/core"
 )
@@ -65,18 +64,4 @@ func Use(l *Locales, def string, cookie bool) {
 		ClientLocale(c)
 		c.Next()
 	})
-}
-
-// SortedLocaleKeys returns the sorted keys of all available locales.
-func SortedLocaleKeys() (kk []string) {
-	for k := range *locales {
-		kk = append(kk, k)
-	}
-	sort.Strings(kk)
-	return
-}
-
-func localeExists(l string) bool {
-	_, ok := (*locales)[l]
-	return ok
 }
