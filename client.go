@@ -56,15 +56,12 @@ func SetClientLocale(c *core.Context, l string) error {
 // matchLocale returns the most appropriate and available locale key for the client.
 // Content Language Headers: https://tools.ietf.org/html/rfc3282
 func matchLocale(r *http.Request) string {
-	tags, _, err := language.ParseAcceptLanguage(r.Header.Get("Accept-Language"))
-	if err != nil {
-		panic(err)
-	}
+	tag, _, _ := language.ParseAcceptLanguage(r.Header.Get("Accept-Language"))
 
-	for _, tag := range tags {
-		base, _ := tag.Base()
-		if _, ok := (*locales)[base.String()]; ok {
-			return base.String()
+	for _, t := range tag {
+		b, _ := t.Base()
+		if _, ok := (*locales)[b.String()]; ok {
+			return b.String()
 		}
 	}
 
