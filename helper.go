@@ -43,7 +43,7 @@ func Use(l *Locales, def string, cookie bool) {
 
 	for i := range *l {
 		if !localeKeyRegexp.MatchString(i) {
-			panic(`i18n: locale key must be an ISO 639-1 code (2 letters lowercase), so "` + i + `" is invalid`)
+			panic(`i18n: locale key must be an ISO 639-1 code (2 letters lowercase) so "` + i + `" is invalid`)
 		}
 	}
 	locales = l

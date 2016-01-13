@@ -73,6 +73,24 @@ In "views/hello.gohtml":
 		</html>
 	{{end}}
 
+Locale detection
+
+Only the standard Accept-Language header is used to detect the most appropriate locale for the client.
+
+Get locale
+
+Use ClientLocale to get the locale used for the client.
+
+Set locale
+
+If you don't want to use the Accept-Language header, you are free to use any client side strategy to get the a locale key:
+
+- Form parameter — example: http://example.com/?locale=en
+- Subdomain — example: http://en.example.com/
+- URL path element — example: http://example.com/en/
+
+After retrieving the desired locale, use SetClientLocale to manually set the locale used for the client.
+
 Translations
 
 Use Trans to get the translation for the client matched locale.
@@ -112,14 +130,5 @@ ViewsFuncs provides a map of all functions usable in templates.
 Example with the Response (https://github.com/volatile/response) package:
 
 	response.ViewsFuncs(i18n.ViewsFuncs)
-
-Get current locale
-
-Use ClientLocale to get the locale used by the client.
-
-Set current locale
-
-Use SetClientLocale to manually set the locale used by client.
-The change is ignored if the provided locale doesn't exists.
 */
 package i18n
