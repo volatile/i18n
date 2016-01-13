@@ -9,7 +9,8 @@ import (
 	"github.com/volatile/core"
 )
 
-// ClientLocale returns the current locale for the client and sets it if it's not already done.
+// ClientLocale returns the current locale used by the client.
+// If the locale has not been matched already, it will be done before returning.
 func ClientLocale(c *core.Context) string {
 	// Use context data to match locale a single time per request.
 	if v, ok := c.Data[contextDataKey]; ok {

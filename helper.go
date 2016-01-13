@@ -29,7 +29,7 @@ var (
 	localeKeyRegexp = regexp.MustCompile("^[a-z]{2}$")
 )
 
-// ViewsFuncs adds internationalization functions to views.
+// ViewsFuncs provides i18n functions to be set for templates.
 var ViewsFuncs = map[string]interface{}{
 	"locale":           ClientLocale,
 	"num":              Num,
@@ -63,7 +63,7 @@ func Use(l *Locales, def string, cookie bool) {
 	})
 }
 
-// SortedLocaleKeys return the sorted keys of all available locales.
+// SortedLocaleKeys returns the sorted keys of all available locales.
 func SortedLocaleKeys() (kk []string) {
 	for k := range *locales {
 		kk = append(kk, k)

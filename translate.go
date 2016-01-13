@@ -14,7 +14,7 @@ func Trans(c *core.Context, key string, a ...interface{}) string {
 
 // TransN returns the translation associated to key, for the client matched locale.
 // If the translation defines plural forms (zero, one, other), it uses the most apropriate.
-// The TransNPlaceholder placeholders in the translation are replaced with the count value.
+// all TransNPlaceholder in the translation are replaced with n.
 func TransN(c *core.Context, key string, n int, a ...interface{}) string {
 	return strings.Replace(trans(c, n, key, a), TransNPlaceholder, Num(c, n), -1)
 }
