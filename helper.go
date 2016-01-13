@@ -25,7 +25,7 @@ var (
 	cookieName = "locale" // The name of the cookie used to save the client matched locale.
 
 	defaultLocale   string
-	locales         *Locales
+	locales         *Locales // The map of available locales. It is ensured to not be empty.
 	localeKeyRegexp = regexp.MustCompile("^[a-z]{2}$")
 )
 
@@ -39,9 +39,13 @@ var ViewsFuncs = map[string]interface{}{
 }
 
 // Use registers locales l.
-// If none match to the client accepted languages, the def locale will be used.
-// If cookie is true, a cookie will be used to save the most appropriate and available locale key for the client.
+// On request, if none match to the client accepted languages, the locale def will be used.
+// And if useCookie is true, a cookie will be used to save the most appropriate and available locale key for the client.
 func Use(l *Locales, def string, cookie bool) {
+	if len(*locales) == 0 {
+		panic("i18n: locales map can't be empty")
+	}
+
 	for i := range *l {
 		if !localeKeyRegexp.MatchString(i) {
 			panic(`i18n: locale key must be an ISO 639-1 code (2 letters lowercase), so "` + i + `" is invalid`)
@@ -49,7 +53,7 @@ func Use(l *Locales, def string, cookie bool) {
 	}
 	locales = l
 
-	if _, ok := (*l)[def]; !ok {
+	if !localeExists(def) {
 		panic("i18n: default locale " + def + " doesn't exist")
 	}
 	defaultLocale = def
@@ -73,9 +77,6 @@ func SortedLocaleKeys() (kk []string) {
 }
 
 func localeExists(l string) bool {
-	if len(*locales) == 0 {
-		return false
-	}
 	_, ok := (*locales)[l]
 	return ok
 }

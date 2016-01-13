@@ -9,8 +9,23 @@ import (
 	"github.com/volatile/core"
 )
 
-// ErrUnknownLocale is returned when the wanted locale doesn't exists.
+// ErrUnknownLocale is returned when the wanted locale doesn't exist.
 var ErrUnknownLocale = errors.New("i18n: unknown locale")
+
+// matchLocale returns the most appropriate and available locale key for the client.
+// Content Language Headers: https://tools.ietf.org/html/rfc3282
+func matchLocale(r *http.Request) string {
+	tag, _, _ := language.ParseAcceptLanguage(r.Header.Get("Accept-Language"))
+
+	for _, t := range tag {
+		b, _ := t.Base()
+		if _, ok := (*locales)[b.String()]; ok {
+			return b.String()
+		}
+	}
+
+	return defaultLocale
+}
 
 // ClientLocale returns the current locale used by the client.
 // If the locale has not been matched already, it will be done before returning.
@@ -34,7 +49,7 @@ func ClientLocale(c *core.Context) string {
 }
 
 // SetClientLocale changes the locale for the actual client.
-// If the locale l doesn't exists, error ErrUnknownLocale is returned.
+// If the locale l doesn't exist, error ErrUnknownLocale is returned.
 func SetClientLocale(c *core.Context, l string) error {
 	if !localeExists(l) {
 		return ErrUnknownLocale
@@ -51,19 +66,4 @@ func SetClientLocale(c *core.Context, l string) error {
 
 	c.Data[contextDataKey] = l
 	return nil
-}
-
-// matchLocale returns the most appropriate and available locale key for the client.
-// Content Language Headers: https://tools.ietf.org/html/rfc3282
-func matchLocale(r *http.Request) string {
-	tag, _, _ := language.ParseAcceptLanguage(r.Header.Get("Accept-Language"))
-
-	for _, t := range tag {
-		b, _ := t.Base()
-		if _, ok := (*locales)[b.String()]; ok {
-			return b.String()
-		}
-	}
-
-	return defaultLocale
 }
