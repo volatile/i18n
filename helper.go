@@ -1,57 +1,83 @@
 package i18n
 
-import "regexp"
+import (
+	"errors"
+	"fmt"
 
-// Locale contains translations and special i18n values associated to unique keys.
-type Locale map[string]string
-
-// Locales contains locales associated to their names.
-type Locales map[string]Locale
+	"golang.org/x/text/language"
+)
 
 const (
+	contextDataKey = "i18nLocale"
 	// TransNPlaceholder is the placeholder replaced by n in a translation, when using the TransN function.
 	TransNPlaceholder = "{{.n}}"
+)
 
-	contextDataKey = "i18nLocale"
+// Errors
+var (
+	ErrUnknownLocale = errors.New("i18n: unknown locale")
 )
 
 var (
-	useCookie  bool       // Defines if the matched locale must be saved in a cookie after matching.
-	cookieName = "locale" // The name of the cookie used to save the client matched locale.
-
-	defaultLocale   string
-	locales         *Locales // The map of available locales. It is ensured to not be empty.
-	localeKeyRegexp = regexp.MustCompile("^[a-z]{2}$")
+	locales    Locales
+	matcher    language.Matcher
+	useCookie  bool
+	cookieName = "locale"
 )
 
 // ViewsFuncs provides i18n functions that can be set for templates.
 var ViewsFuncs = map[string]interface{}{
-	"locale":           ClientLocale,
-	"num":              Num,
-	"sortedLocaleKeys": SortedLocaleKeys,
-	"trans":            Trans,
-	"transn":           TransN,
+	"clientLlocale": ClientLocale,
+	"num":           Num,
+	"trans":         Trans,
+	"transn":        TransN,
 }
 
-// Use registers locales l.
-// On request, if none match to the client accepted languages, the locale def will be used.
-// And if useCookie is true, a cookie will be used to save the most appropriate and available locale key for the client.
-func Use(l *Locales, def string, cookie bool) {
-	if l == nil {
-		panic("i18n: locales map can't be empty")
+// Translations is a map of translations for a language tag.
+type Translations map[string]string
+
+// Locales contains language tags and their translations.
+type Locales map[language.Tag]Translations
+
+// Has checks if the locale tag t exists in the locales map.
+func (ll *Locales) Has(t language.Tag) bool {
+	_, ok := (*ll)[t]
+	return ok
+}
+
+// Use registers locales ll.
+// On request, if none matches the client accepted languages, the locale def will be used.
+// If cookie is true, a cookie will be used to save the most appropriate and available locale tag for the client.
+func Use(ll Locales, def language.Tag, cookie bool) {
+	locales = ll
+	if !locales.Has(def) {
+		panic(fmt.Errorf("i18n: default locale %q doesn't exist", def))
 	}
 
-	for i := range *l {
-		if !localeKeyRegexp.MatchString(i) {
-			panic(`i18n: locale key must be an ISO 639-1 code (2 letters lowercase) so "` + i + `" is invalid`)
+	tt := []language.Tag{def}
+	for t := range ll {
+		if t != def {
+			tt = append(tt, t)
 		}
 	}
-	locales = l
-
-	if !localeExists(def) {
-		panic("i18n: default locale " + def + " doesn't exist")
-	}
-	defaultLocale = def
+	matcher = language.NewMatcher(tt)
 
 	useCookie = cookie
+}
+
+// CleanAcceptLanguage parses, cleans and returns the contents of a Accept-Language header.
+func CleanAcceptLanguage(s string) (string, error) {
+	tt, q, err := language.ParseAcceptLanguage(s)
+	if err != nil {
+		return "", err
+	}
+
+	s = ""
+	for i := 0; i < len(tt); i++ {
+		if i > 0 {
+			s += ","
+		}
+		s += fmt.Sprintf("%s;q=%g", tt[i].String(), q[i])
+	}
+	return s, nil
 }

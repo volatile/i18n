@@ -18,11 +18,12 @@ import (
 	"github.com/volatile/core"
 	"github.com/volatile/i18n"
 	"github.com/volatile/response"
+	"golang.org/x/text/language"
 )
 
 func main() {
-	i18n.Use(&locales, "en", true)       // Default locale is "en" and client locale will be saved in a cookie on first match.
-	response.ViewsFuncs(i18n.ViewsFuncs) // Functions for views templates
+	i18n.Use(&locales, language.English, true) // Default locale is language.English and client locale will be saved in a cookie on first match.
+	response.ViewsFuncs(i18n.ViewsFuncs)       // Functions for views templates
 
 	core.Use(func(c *core.Context) {
 		response.View(c, "hello", map[string]interface{}{
@@ -35,7 +36,7 @@ func main() {
 }
 
 var locales = i18n.Locales{
-	"en": i18n.Locale{
+	language.English: i18n.Locale{
 		"decimalMark":   ".",
 		"thousandsMark": ",",
 
@@ -45,7 +46,7 @@ var locales = i18n.Locales{
 		"coins.one":   "You have a single and precious coin.",
 		"coins.other": "You have " + i18n.TransNPlaceholder + " coins.",
 	},
-	"fr": i18n.Locale{
+	language.French: i18n.Locale{
 		"decimalMark":   ",",
 		"thousandsMark": " ",
 
@@ -86,13 +87,13 @@ Use [`ClientLocale`](https://godoc.org/github.com/volatile/i18n#ClientLocale) to
 
 #### Set locale
 
-If you don't want to use the `Accept-Language` header, you are free to use any client side strategy to get the a locale key:
+If you don't want to use the `Accept-Language` header, you are free to use any strategy to get the a language tag:
 
 - Form parameter — example: `http://example.com/?locale=en`
 - Subdomain — example: `http://en.example.com/`
 - URL path element — example: `http://example.com/en/`
 
-After retrieving the desired locale, use [`SetClientLocale`](https://godoc.org/github.com/volatile/i18n#SetClientLocale) to manually set the locale used for the client.
+After parsing a language tag, use [`SetClientLocale`](https://godoc.org/github.com/volatile/i18n#SetClientLocale) to manually set the locale used for the client.
 
 ### Translations
 

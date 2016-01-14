@@ -20,24 +20,24 @@ func TransN(c *core.Context, key string, n int, a ...interface{}) string {
 }
 
 func trans(c *core.Context, count int, key string, a []interface{}) string {
-	if locale, ok := (*locales)[ClientLocale(c)]; ok {
+	if trs, ok := locales[ClientLocale(c)]; ok {
 		if count == 0 {
-			if v, ok := locale[key+".zero"]; ok {
+			if v, ok := trs[key+".zero"]; ok {
 				return fmt.Sprintf(v, a...)
 			}
 		}
 
 		if count == 1 {
-			if v, ok := locale[key+".one"]; ok {
+			if v, ok := trs[key+".one"]; ok {
 				return fmt.Sprintf(v, a...)
 			}
 		}
 
-		if v, ok := locale[key+".other"]; ok {
+		if v, ok := trs[key+".other"]; ok {
 			return fmt.Sprintf(v, a...)
 		}
 
-		if v, ok := locale[key]; ok {
+		if v, ok := trs[key]; ok {
 			return fmt.Sprintf(v, a...)
 		}
 	}
