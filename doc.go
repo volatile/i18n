@@ -36,7 +36,7 @@ Example:
 	}
 
 	var locales = i18n.Locales{
-		language.English: i18n.Locale{
+		language.English: {
 			"decimalMark":   ".",
 			"thousandsMark": ",",
 
@@ -46,7 +46,7 @@ Example:
 			"coins.one":   "You have a single and precious coin.",
 			"coins.other": "You have " + i18n.TransNPlaceholder + " coins.",
 		},
-		language.French: i18n.Locale{
+		language.French: {
 			"decimalMark":   ",",
 			"thousandsMark": " ",
 
