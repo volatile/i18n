@@ -42,9 +42,9 @@ Example:
 
 			"hello":       "Hello %s,",
 			"how":         "How are you?",
-			"coins.zero":  "Your wallet is empty.",
-			"coins.one":   "You have a single and precious coin.",
-			"coins.other": "You have " + i18n.TransNPlaceholder + " coins.",
+			"coinsZero":  "Your wallet is empty.",
+			"coinsOne":   "You have a single and precious coin.",
+			"coinsOther": "You have " + i18n.TransNPlaceholder + " coins.",
 		},
 		language.French: {
 			"decimalMark":   ",",
@@ -52,9 +52,9 @@ Example:
 
 			"hello":       "Bonjour %s,",
 			"how":         "Comment allez-vous?",
-			"coins.zero":  "Vous êtes fauché.",
-			"coins.one":   "Vous avez une seule et précieuse pièce.",
-			"coins.other": "Vous possédez " + i18n.TransNPlaceholder + " pièces.",
+			"coinsZero":  "Vous êtes fauché.",
+			"coinsOne":   "Vous avez une seule et précieuse pièce.",
+			"coinsOther": "Vous possédez " + i18n.TransNPlaceholder + " pièces.",
 		},
 	}
 
@@ -104,14 +104,14 @@ Pluralization
 TransN works like Trans but it tries to find the best translation form, following a number of elements.
 
 A pluralized translation has 3 forms: zero, one, other.
-They are defined at the end of the key: "myTranslationKey.zero", "myTranslationKey.one" and "myTranslationKey.other".
+They are defined at the end of the key: "myTranslationKeyZero", "myTranslationKeyOne" and "myTranslationKeyOther".
 If TransNPlaceholder is used in the translation, the number of elements will take this place.
 
 Translation example:
 
-	"apple.zero" = "There are no apples."
-	"apple.one" = "There is a single apple."
-	"apple.other" = "There are " + i18n.TransNPlaceholder + " apples."
+	"appleZero" = "There are no apples."
+	"appleOne" = "There is a single apple."
+	"appleOther" = "There are " + i18n.TransNPlaceholder + " apples."
 
 Function example:
 
