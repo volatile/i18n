@@ -86,9 +86,11 @@ Set locale
 
 If you don't want to use the Accept-Language header, you are free to use any client side strategy to get the a language tag:
 
-- Form parameter — example: http://example.com/?locale=en
-- Subdomain — example: http://en.example.com/
-- URL path element — example: http://example.com/en/
+● Form parameter — example: http://example.com/?locale=en
+
+● Subdomain — example: http://en.example.com/
+
+● URL path element — example: http://example.com/en/
 
 After parsing a language tag, use SetClientLocale to manually set the locale used for the client.
 
