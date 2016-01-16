@@ -40,8 +40,8 @@ var locales = i18n.Locales{
 		"decimalMark":   ".",
 		"thousandsMark": ",",
 
-		"hello":       "Hello %s,",
-		"how":         "How are you?",
+		"hello":      "Hello %s,",
+		"how":        "How are you?",
 		"coinsZero":  "Your wallet is empty.",
 		"coinsOne":   "You have a single and precious coin.",
 		"coinsOther": "You have " + i18n.TransNPlaceholder + " coins.",
@@ -50,8 +50,8 @@ var locales = i18n.Locales{
 		"decimalMark":   ",",
 		"thousandsMark": " ",
 
-		"hello":       "Bonjour %s,",
-		"how":         "Comment allez-vous?",
+		"hello":      "Bonjour %s,",
+		"how":        "Comment allez-vous?",
 		"coinsZero":  "Vous êtes fauché.",
 		"coinsOne":   "Vous avez une seule et précieuse pièce.",
 		"coinsOther": "Vous possédez " + i18n.TransNPlaceholder + " pièces.",
