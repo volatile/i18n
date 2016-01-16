@@ -27,10 +27,10 @@ var (
 
 // ViewsFuncs provides i18n functions that can be set for templates.
 var ViewsFuncs = map[string]interface{}{
-	"clientLlocale": ClientLocale,
-	"num":           Num,
-	"trans":         Trans,
-	"transn":        TransN,
+	"clientLocale": ClientLocale,
+	"num":          Num,
+	"trans":        Trans,
+	"transn":       TransN,
 }
 
 // Translations is a map of translations for a language tag.
