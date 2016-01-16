@@ -25,8 +25,8 @@ var (
 	cookieName = "locale"
 )
 
-// ViewsFuncs provides i18n functions that can be set for templates.
-var ViewsFuncs = map[string]interface{}{
+// TemplatesFuncs provides i18n functions that can be set for templates.
+var TemplatesFuncs = map[string]interface{}{
 	"clientLocale": ClientLocale,
 	"num":          Num,
 	"trans":        Trans,

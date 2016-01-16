@@ -23,10 +23,10 @@ Example:
 
 	func main() {
 		i18n.Use(&locales, language.English, true) // Default locale is language.English and client locale will be saved in a cookie.
-		response.ViewsFuncs(i18n.ViewsFuncs)       // Functions for views templates
+		response.TemplatesFuncs(i18n.TemplatesFuncs)       // Functions for templates
 
 		core.Use(func(c *core.Context) {
-			response.View(c, "hello", map[string]interface{}{
+			response.Template(c, "hello", map[string]interface{}{
 				"name":        "John Doe",
 				"coinsNumber": 500,
 			})
@@ -58,7 +58,7 @@ Example:
 		},
 	}
 
-In "views/hello.gohtml":
+In "templates/hello.gohtml":
 
 	{{define "hello"}}
 		<!DOCTYPE html>
@@ -126,12 +126,12 @@ Numbers
 Use #Num to get a formatted number with decimal and thousands marks.
 If set, the special "decimalMark" and "thousandsMark" keys will be used from the matched locale.
 
-Views functions
+Templates functions
 
-ViewsFuncs provides a map of all functions usable in templates.
+TemplatesFuncs provides a map of all functions usable in templates.
 
 Example with the Response (https://github.com/volatile/response) package:
 
-	response.ViewsFuncs(i18n.ViewsFuncs)
+	response.TemplatesFuncs(i18n.TemplatesFuncs)
 */
 package i18n
