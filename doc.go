@@ -22,8 +22,8 @@ Example:
 	)
 
 	func main() {
-		i18n.Use(&locales, language.English, true) // Default locale is language.English and client locale will be saved in a cookie.
-		response.TemplatesFuncs(i18n.TemplatesFuncs)       // Functions for templates
+		i18n.Use(&locales, language.English, true)   // Default locale is language.English and client locale will be saved in a cookie.
+		response.TemplatesFuncs(i18n.TemplatesFuncs) // Functions for templates
 
 		core.Use(func(c *core.Context) {
 			response.Template(c, "hello", response.DataMap{
