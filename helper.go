@@ -66,6 +66,7 @@ func Use(ll Locales, def language.Tag, cookie bool) {
 }
 
 // CleanAcceptLanguage parses, cleans and returns the contents of a Accept-Language header.
+// If an error is encountered, the result is an empty string.
 func CleanAcceptLanguage(s string) (string, error) {
 	tt, q, err := language.ParseAcceptLanguage(s)
 	if err != nil {
