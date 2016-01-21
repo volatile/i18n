@@ -9,8 +9,8 @@ import (
 
 const (
 	contextDataKey = "i18nLocale"
-	// TransNPlaceholder is the placeholder replaced by n in a translation, when using the TransN function.
-	TransNPlaceholder = "{{.n}}"
+	// TnPlaceholder is the placeholder replaced by n in a translation, when using the TransN function.
+	TnPlaceholder = "{{.n}}"
 )
 
 // Errors
@@ -28,9 +28,9 @@ var (
 // TemplatesFuncs provides i18n functions that can be set for templates.
 var TemplatesFuncs = map[string]interface{}{
 	"clientLocale": ClientLocale,
-	"num":          Num,
-	"trans":        Trans,
-	"transn":       TransN,
+	"fmtn":         Fmtn,
+	"t":            T,
+	"tn":           Tn,
 }
 
 // Translations is a map of translations for a language tag.

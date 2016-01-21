@@ -7,19 +7,19 @@ import (
 	"github.com/volatile/core"
 )
 
-// Trans returns the translation associated to key, for the client matched locale.
-func Trans(c *core.Context, key string, a ...interface{}) string {
-	return trans(c, -1, key, a)
+// T returns the translation associated to key, for the client matched locale.
+func T(c *core.Context, key string, a ...interface{}) string {
+	return t(c, -1, key, a)
 }
 
-// TransN returns the translation associated to key, for the client matched locale.
+// Tn returns the translation associated to key, for the client matched locale.
 // If the translation defines plural forms (zero, one, other), it uses the most apropriate.
-// all TransNPlaceholder in the translation are replaced with n.
-func TransN(c *core.Context, key string, n int, a ...interface{}) string {
-	return strings.Replace(trans(c, n, key, a), TransNPlaceholder, Num(c, n), -1)
+// All TNPlaceholder in the translation are replaced with n.
+func Tn(c *core.Context, key string, n int, a ...interface{}) string {
+	return strings.Replace(t(c, n, key, a), TnPlaceholder, Fmtn(c, n), -1)
 }
 
-func trans(c *core.Context, count int, key string, a []interface{}) string {
+func t(c *core.Context, count int, key string, a []interface{}) string {
 	if trs, ok := locales[ClientLocale(c)]; ok {
 		if count == 0 {
 			if v, ok := trs[key+"Zero"]; ok {

@@ -26,7 +26,7 @@ func main() {
 	response.TemplatesFuncs(i18n.TemplatesFuncs)       // Functions for templates
 
 	core.Use(func(c *core.Context) {
-		response.Template(c, "hello", map[string]interface{}{
+		response.Template(c, "hello", response.DataMap{
 			"name":        "John Doe",
 			"coinsNumber": 500,
 		})
@@ -44,7 +44,7 @@ var locales = i18n.Locales{
 		"how":        "How are you?",
 		"coinsZero":  "Your wallet is empty.",
 		"coinsOne":   "You have a single and precious coin.",
-		"coinsOther": "You have " + i18n.TransNPlaceholder + " coins.",
+		"coinsOther": "You have " + i18n.TnPlaceholder + " coins.",
 	},
 	language.French: {
 		"decimalMark":   ",",
@@ -54,7 +54,7 @@ var locales = i18n.Locales{
 		"how":        "Comment allez-vous?",
 		"coinsZero":  "Vous êtes fauché.",
 		"coinsOne":   "Vous avez une seule et précieuse pièce.",
-		"coinsOther": "Vous possédez " + i18n.TransNPlaceholder + " pièces.",
+		"coinsOther": "Vous possédez " + i18n.TnPlaceholder + " pièces.",
 	},
 }
 ```
@@ -97,37 +97,37 @@ After parsing a language tag, use [`SetClientLocale`](https://godoc.org/github.c
 
 ### Translations
 
-Use [`Trans`](https://godoc.org/github.com/volatile/i18n#Trans) to get the translation for the client matched locale.
+Use [`T`](https://godoc.org/github.com/volatile/i18n#T) to get the translation for the client matched locale.
 If the translation value contains format verbs (like `%s` or `%d`), the last variadic receives the content for them.
 
 When the translation associated to key doesn't exist, an empty string is returned in production mode (otherwise, the key).
 
 #### Pluralization
 
-[`TransN`](https://godoc.org/github.com/volatile/i18n#TransN) works like [`Trans`](https://godoc.org/github.com/volatile/i18n#Trans) but it tries to find the best translation form, following a number of elements.
+[`Tn`](https://godoc.org/github.com/volatile/i18n#Tn) works like [`T`](https://godoc.org/github.com/volatile/i18n#T) but it tries to find the best translation form, following a number of elements.
 
 A pluralized translation has 3 forms: zero, one, other.  
 They are defined at the end of the key: `myTranslationKeyZero`, `myTranslationKeyOne` and `myTranslationKeyOther`.  
-If [`TransNPlaceholder`](https://godoc.org/github.com/volatile/i18n#pkg-constants) is used in the translation, the number of elements will take this place.
+If [`TnPlaceholder`](https://godoc.org/github.com/volatile/i18n#pkg-constants) is used in the translation, the number of elements will take this place.
 
 Translation example:
 
 ```Go
 "appleZero"   = "There are no apples."
 "appleOne"   = "There is a single apple."
-"appleOther" = "There are " + i18n.TransNPlaceholder + " apples."
+"appleOther" = "There are " + i18n.TnPlaceholder + " apples."
 ```
 
 Function example:
 
 ```Go
-i18n.TransN(c, "apple", 7)
+i18n.Tn(c, "apple", 7)
 ```
 …results in `There are 7 apples.`.
 
 ### Numbers
 
-Use [`Num`](https://godoc.org/github.com/volatile/i18n#Num) to get a formatted number with decimal and thousands marks.
+Use [`Fmtn`](https://godoc.org/github.com/volatile/i18n#Fmtn) to get a formatted number with decimal and thousands marks.
 If set, the special `decimalMark` and `thousandsMark` keys will be used from the matched locale.
 
 ### Templates functions

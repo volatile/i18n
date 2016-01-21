@@ -26,7 +26,7 @@ Example:
 		response.TemplatesFuncs(i18n.TemplatesFuncs)       // Functions for templates
 
 		core.Use(func(c *core.Context) {
-			response.Template(c, "hello", map[string]interface{}{
+			response.Template(c, "hello", response.DataMap{
 				"name":        "John Doe",
 				"coinsNumber": 500,
 			})
@@ -44,7 +44,7 @@ Example:
 			"how":        "How are you?",
 			"coinsZero":  "Your wallet is empty.",
 			"coinsOne":   "You have a single and precious coin.",
-			"coinsOther": "You have " + i18n.TransNPlaceholder + " coins.",
+			"coinsOther": "You have " + i18n.TnPlaceholder + " coins.",
 		},
 		language.French: {
 			"decimalMark":   ",",
@@ -54,7 +54,7 @@ Example:
 			"how":        "Comment allez-vous?",
 			"coinsZero":  "Vous êtes fauché.",
 			"coinsOne":   "Vous avez une seule et précieuse pièce.",
-			"coinsOther": "Vous possédez " + i18n.TransNPlaceholder + " pièces.",
+			"coinsOther": "Vous possédez " + i18n.TnPlaceholder + " pièces.",
 		},
 	}
 
@@ -96,34 +96,34 @@ After parsing a language tag, use SetClientLocale to manually set the locale use
 
 Translations
 
-Use Trans to get the translation for the client matched locale.
+Use T to get the translation for the client matched locale.
 If the translation value contains format verbs (like %s or %d), the last variadic receives the content for them.
 
 When the translation associated to key doesn't exist, an empty string is returned in production mode (otherwise, the key).
 
 Pluralization
 
-TransN works like Trans but it tries to find the best translation form, following a number of elements.
+Tn works like T but it tries to find the best translation form, following a number of elements.
 
 A pluralized translation has 3 forms: zero, one, other.
 They are defined at the end of the key: "myTranslationKeyZero", "myTranslationKeyOne" and "myTranslationKeyOther".
-If TransNPlaceholder is used in the translation, the number of elements will take this place.
+If TnPlaceholder is used in the translation, the number of elements will take this place.
 
 Translation example:
 
 	"appleZero" = "There are no apples."
 	"appleOne" = "There is a single apple."
-	"appleOther" = "There are " + i18n.TransNPlaceholder + " apples."
+	"appleOther" = "There are " + i18n.TnPlaceholder + " apples."
 
 Function example:
 
-	i18n.TransN(c, "apple", 7)
+	i18n.Tn(c, "apple", 7)
 
 …results in "There are 7 apples".
 
 Numbers
 
-Use #Num to get a formatted number with decimal and thousands marks.
+Use Fmtn to get a formatted number with decimal and thousands marks.
 If set, the special "decimalMark" and "thousandsMark" keys will be used from the matched locale.
 
 Templates functions
