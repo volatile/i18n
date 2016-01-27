@@ -69,7 +69,7 @@ func Init(ll Locales, def language.Tag) {
 
 // Use sets a handler that matches locale with the provided matchers.
 // Multiple matching functions can be used.
-// Cclient locale is set as soon as a matcher is confident.
+// Client locale is set as soon as a matcher is confident.
 func Use(matchers ...Matcher) {
 	core.Use(func(c *core.Context) {
 		for _, m := range matchers {
