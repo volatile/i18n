@@ -4,25 +4,25 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/volatile/core"
+
 	"golang.org/x/text/language"
 )
 
-const (
-	contextDataKey = "i18nLocale"
-	// TnPlaceholder is the placeholder replaced by n in a translation, when using the TransN function.
-	TnPlaceholder = "{{.n}}"
+const contextDataKey = "i18nLocale"
+
+// TnPlaceholder is the placeholder replaced by n in a translation, when using the TransN function.
+const TnPlaceholder = "{{.n}}"
+
+var (
+	locales       Locales
+	defaultLocale language.Tag
+	matcher       language.Matcher
 )
 
 // Errors
 var (
 	ErrUnknownLocale = errors.New("i18n: unknown locale")
-)
-
-var (
-	locales    Locales
-	matcher    language.Matcher
-	useCookie  bool
-	cookieName = "locale"
 )
 
 // TemplatesFuncs provides i18n functions that can be set for templates.
@@ -45,11 +45,15 @@ func (ll *Locales) Has(t language.Tag) bool {
 	return ok
 }
 
-// Use registers locales ll.
-// On request, if none matches the client accepted languages, the locale def will be used.
-// If cookie is true, a cookie will be used to save the most appropriate and available locale tag for the client.
-func Use(ll Locales, def language.Tag, cookie bool) {
+// Init registers locales ll and default locale def for the entire app.
+func Init(ll Locales, def language.Tag) {
+	if locales != nil {
+		panic(errors.New("i18n: Init called multiple times"))
+	}
+
 	locales = ll
+	defaultLocale = def
+
 	if !locales.Has(def) {
 		panic(fmt.Errorf("i18n: default locale %q doesn't exist", def))
 	}
@@ -61,8 +65,22 @@ func Use(ll Locales, def language.Tag, cookie bool) {
 		}
 	}
 	matcher = language.NewMatcher(tt)
+}
 
-	useCookie = cookie
+// Use sets a handler that matches locale with the provided matchers.
+// Multiple matching functions can be used.
+// Cclient locale is set as soon as a matcher is confident.
+func Use(matchers ...Matcher) {
+	core.Use(func(c *core.Context) {
+		for _, m := range matchers {
+			if t, conf := m(c); conf != language.No {
+				if err := SetClientLocale(c, t); err == nil {
+					break
+				}
+			}
+		}
+		c.Next()
+	})
 }
 
 // CleanAcceptLanguage parses, cleans and returns the contents of a Accept-Language header.

@@ -1,5 +1,5 @@
 /*
-Package i18n is a helper for the Core (https://github.com/volatile/core).
+Package i18n is a handler and helper for the Core (https://github.com/volatile/core).
 It provides internationalization functions following the client preferences.
 
 Installation
@@ -22,8 +22,10 @@ Example:
 	)
 
 	func main() {
-		i18n.Use(&locales, language.English, true)   // Default locale is language.English and client locale will be saved in a cookie.
-		response.TemplatesFuncs(i18n.TemplatesFuncs) // Functions for templates
+		i18n.Init(locales, language.English)         // Default locale is language.English and client locale will be saved in a cookie.
+		response.TemplatesFuncs(i18n.TemplatesFuncs) // Set functions for templates.
+
+		i18n.Use(i18n.MatcherFormValue, i18n.MatcherAcceptLanguageHeader) // Try to match the client locale with the "locale" form value, or with his Accept-Language header, in this order.
 
 		core.Use(func(c *core.Context) {
 			response.Template(c, "hello", response.DataMap{
@@ -74,9 +76,14 @@ In "templates/hello.gohtml":
 		</html>
 	{{end}}
 
-Locale detection
+Match locale
 
-Only the standard Accept-Language header is used to detect the most appropriate locale for the client.
+To match the client preferences, you need to set a handler with Use and provide at least one matching function.
+
+These ones are actually available:
+
+● MatcherAcceptLanguageHeader to match the Accept-Language header.
+● MatcherFormValue to match the "locale" form value.
 
 Get locale
 
@@ -84,20 +91,12 @@ Use ClientLocale to get the locale used for the client.
 
 Set locale
 
-If you don't want to use the Accept-Language header, you are free to use any client side strategy to get the a language tag:
-
-● Form parameter: http://example.com/?locale=en
-
-● Subdomain: http://en.example.com/
-
-● URL path element: http://example.com/en/
-
 After parsing a language tag, use SetClientLocale to manually set the locale used for the client.
 
 Translations
 
 Use T to get the translation for the client matched locale.
-If the translation value contains format verbs (like %s or %d), the last variadic receives the content for them.
+If the translation value contains format verbs (like %s or %d), the variadic receives the content for them.
 
 When the translation associated to key doesn't exist, an empty string is returned in production mode (otherwise, the key).
 
