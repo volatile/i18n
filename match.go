@@ -5,7 +5,7 @@ import (
 	"golang.org/x/text/language"
 )
 
-// Matcher is a matching strategy used by the handler to match and set the client locale.
+// Matcher is a matching function used by the handler.
 type Matcher func(*core.Context) (language.Tag, language.Confidence)
 
 // Match matches the first of the given tags to reach a certain confidence threshold with an available locale.
@@ -16,8 +16,8 @@ func Match(tt ...language.Tag) (t language.Tag, c language.Confidence) {
 	return
 }
 
-// MatchString parses the string s and matches the first of the given tags to reach a certain confidence threshold with an available locale.
-// The string can be a list of language tags with preference values (from the Accept-Language header for example) or a single language tag.
+// MatchString parses string s and matches the first of the given tags to reach a certain confidence threshold with an available locale.
+// The string can be a single language tag or a list of language tags with preference values (from the Accept-Language header, for example).
 func MatchString(s string) (language.Tag, language.Confidence) {
 	pref, _, _ := language.ParseAcceptLanguage(s)
 	return Match(pref...)
@@ -33,4 +33,4 @@ func MatcherFormValue(c *core.Context) (language.Tag, language.Confidence) {
 	return MatchString(c.Request.FormValue("locale"))
 }
 
-// TODO: Matchers for GeoIP, subdomain, TLD, request path.
+// TODO: Matchers for location, GeoIP, subdomain, TLD, request path.

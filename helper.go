@@ -33,13 +33,13 @@ var TemplatesFuncs = map[string]interface{}{
 	"tn":           Tn,
 }
 
-// Translations is a map of translations for a language tag.
+// Translations is a map of translations.
 type Translations map[string]string
 
-// Locales contains language tags and their translations.
+// Locales is a map of translations associated to language tags.
 type Locales map[language.Tag]Translations
 
-// Has checks if the locale tag t exists in the locales map.
+// Has checks if locale t exists in the locales map.
 func (ll *Locales) Has(t language.Tag) bool {
 	_, ok := (*ll)[t]
 	return ok
@@ -67,9 +67,9 @@ func Init(ll Locales, def language.Tag) {
 	matcher = language.NewMatcher(tt)
 }
 
-// Use sets a handler that matches locale with the provided matchers.
-// Multiple matching functions can be used.
-// Client locale is set as soon as a matcher is confident.
+// Use sets a handler that matches locale for client, thanks to matchers.
+// Multiple matchers can be used.
+// The client locale is set as soon as a matcher is confident.
 func Use(matchers ...Matcher) {
 	core.Use(func(c *core.Context) {
 		for _, m := range matchers {
@@ -84,11 +84,11 @@ func Use(matchers ...Matcher) {
 }
 
 // CleanAcceptLanguage parses, cleans and returns the contents of a Accept-Language header.
-// If an error is encountered, the result is an empty string.
+// If an error is encountered, the returned string is the same as given.
 func CleanAcceptLanguage(s string) (string, error) {
 	tt, q, err := language.ParseAcceptLanguage(s)
 	if err != nil {
-		return "", err
+		return s, err
 	}
 
 	s = ""

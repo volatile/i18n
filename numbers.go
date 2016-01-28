@@ -7,7 +7,7 @@ import (
 	"github.com/volatile/core"
 )
 
-// Fmtn returns a formatted number with decimal and thousands marks, according to the locale's decimalMark and thousandsMark keys respectively.
+// Fmtn returns a formatted number with decimal and thousands marks, according to the locale's "decimalMark" and "thousandsMark" keys respectively.
 // If not set, the decimal mark is "," and the thousands mark is ".".
 func Fmtn(c *core.Context, n interface{}) (s string) {
 	var b []byte

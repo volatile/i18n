@@ -6,7 +6,7 @@ import (
 	"github.com/volatile/core"
 )
 
-// ClientLocale returns the current locale used by the client.
+// ClientLocale returns the current locale used for the client.
 func ClientLocale(c *core.Context) language.Tag {
 	if v, ok := c.Data[contextDataKey]; ok {
 		return v.(language.Tag)
@@ -14,8 +14,8 @@ func ClientLocale(c *core.Context) language.Tag {
 	return defaultLocale
 }
 
-// SetClientLocale changes the locale for the actual client.
-// If the language tag t doesn't match any available locale, error ErrUnknownLocale is returned.
+// SetClientLocale sets the locale used for the client.
+// If the locale described by language tag t doesn't exist, error ErrUnknownLocale is returned.
 func SetClientLocale(c *core.Context, t language.Tag) error {
 	if !locales.Has(t) {
 		return ErrUnknownLocale
