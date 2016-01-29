@@ -67,7 +67,7 @@ func Init(ll Locales, def language.Tag) {
 	matcher = language.NewMatcher(tt)
 }
 
-// Use adds a handler to the default handlers stack.
+// Use adds the handler to the default handlers stack.
 // It matches locale for client, thanks to matchers.
 // Multiple matchers can be used.
 // The client locale is set as soon as a matcher is confident.
