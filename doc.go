@@ -31,7 +31,7 @@ All translations can be stored like this:
 		},
 	}
 
-"decimalMark" and "thousandsMark" are special keys that define the digits separators for decimals and thousands when using Tn or Fmtn.
+decimalMark and thousandsMark are special keys that define the digits separators for decimals and thousands when using Tn or Fmtn.
 
 With these translations, you need to Init this package (the second argument is the default locale):
 
@@ -63,7 +63,7 @@ If a translation has pluralized forms, you can use Tn and the most appropriate f
 will result in "You have 333,000.333 bucks in your basement.".
 
 If you use templates, TemplatesFuncs provides a map of all usable functions.
-Example for the Response (https://godoc.org/github.com/volatile/response) package:
+Example with package response (https://godoc.org/github.com/volatile/response) package:
 
 	response.TemplatesFuncs(i18n.TemplatesFuncs)
 */
