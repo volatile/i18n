@@ -40,7 +40,7 @@ With these translations, you need to Init this package (the second argument is t
 Detect client locale
 
 When a client makes a request, the best locale must be matched to his preferences.
-To achieve this, you need to Use a handler with one or more matchers:
+To achieve this, you need to Use the handler with one or more matchers:
 
 	i18n.Use(i18n.MatcherFormValue, i18n.MatcherAcceptLanguageHeader)
 
