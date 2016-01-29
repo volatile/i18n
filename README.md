@@ -1,19 +1,13 @@
-<p align="center"><img src="http://volatile.whitedevops.com/images/repositories/i18n/logo.png" alt="Volatile I18n" title="Volatile I18n"><br><br></p>
+<p align="center"><img src="http://volatile.whitedevops.com/images/repositories/i18n/logo.png" alt="Volatile I18n" title="Volatile I18n"><br><br</p>
+
+[![GoDoc](https://godoc.org/github.com/volatile/i18n?status.svg)](https://godoc.org/github.com/volatile/i18n)
 
 Volatile I18n is a helper for the [Core](https://github.com/volatile/core).  
 It provides internationalization functions following the client preferences.
 
-## Installation
+## Set translations
 
-```Shell
-$ go get github.com/volatile/i18n
-```
-
-## Usage [![GoDoc](https://godoc.org/github.com/volatile/i18n?status.svg)](https://godoc.org/github.com/volatile/i18n)
-
-### Set translations
-
-A translation is associated to a key, which is associated to a language tag, which is part of Locales map.
+A translation is associated to a key, which is associated to a language tag, which is part of [Locales](https://godoc.org/github.com/volatile/i18n#Locales) map.
 
 All translations can be stored like this:
 
@@ -50,10 +44,10 @@ With these translations, you need to [Init](https://godoc.org/github.com/volatil
 i18n.Init(locales, language.English)
 ```
 
-### Detect client locale
+## Detect client locale
 
 When a client makes a request, the best locale must be matched to his preferences.  
-To achieve this, you need to Use a handler with one or more matchers:
+To achieve this, you need to [Use](https://godoc.org/github.com/volatile/i18n#Use) a handler with one or more matchers:
 
 ```Go
 i18n.Use(i18n.MatcherFormValue, i18n.MatcherAcceptLanguageHeader)
@@ -61,15 +55,12 @@ i18n.Use(i18n.MatcherFormValue, i18n.MatcherAcceptLanguageHeader)
 
 The client locale is set as soon as a matcher is confident.
 
-A matcher is a function that returns the locale parsed from core.Context with its level of confidence.  
-These ones are actually available:
+A matcher is a function that returns the locale parsed from [core.Context](https://godoc.org/github.com/volatile/core#Context) with its level of confidence.  
+These ones are actually available: [MatcherAcceptLanguageHeader](https://godoc.org/github.com/volatile/i18n#MatcherAcceptLanguageHeader) and [MatcherFormValue](https://godoc.org/github.com/volatile/i18n#MatcherFormValue).
 
-- [MatcherAcceptLanguageHeader](https://godoc.org/github.com/volatile/i18n#MatcherAcceptLanguageHeader) to match the Accept-Language header.
-- [MatcherFormValue](https://godoc.org/github.com/volatile/i18n#MatcherFormValue) to match the `locale` form value.
+## Use translations
 
-### Use translations
-
-A translation can be accessed with T, receiving the core.Context (which contains the matched locale), the translation key, and optional arguments (if the translation contains formatting verbs):
+A translation can be accessed with [T](https://godoc.org/github.com/volatile/i18n#T), receiving the core.Context (which contains the matched locale), the translation key, and optional arguments (if the translation contains formatting verbs):
 
 ```Go
 i18n.T(c, "hello", "Walter White")

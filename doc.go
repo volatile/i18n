@@ -47,11 +47,7 @@ To achieve this, you need to Use a handler with one or more matchers:
 The client locale is set as soon as a matcher is confident.
 
 A matcher is a function that returns the locale parsed from core.Context with its level of confidence.
-These ones are actually available:
-
-- MatcherAcceptLanguageHeader to match the Accept-Language header.
-
-- MatcherFormValue to match the "locale" form value.
+These ones are actually available: MatcherAcceptLanguageHeader and MatcherFormValue.
 
 Use translations
 
