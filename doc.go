@@ -34,14 +34,12 @@ All translations can be stored like this:
 decimalMark and thousandsMark are special keys that define the digits separators for decimals and thousands when using Tn or Fmtn.
 
 With these translations, you need to Init this package (the second argument is the default locale):
-
 	i18n.Init(locales, language.English)
 
 Detect client locale
 
 When a client makes a request, the best locale must be matched to his preferences.
 To achieve this, you need to Use the handler with one or more matchers:
-
 	i18n.Use(i18n.MatcherFormValue, i18n.MatcherAcceptLanguageHeader)
 
 The client locale is set as soon as a matcher is confident.
@@ -52,19 +50,15 @@ These ones are actually available: MatcherAcceptLanguageHeader and MatcherFormVa
 Use translations
 
 A translation can be accessed with T, receiving the core.Context (which contains the matched locale), the translation key, and optional arguments (if the translation contains formatting verbs):
-
 	i18n.T(c, "hello", "Walter White")
 	i18n.T(c, "how")
 
 If a translation has pluralized forms, you can use Tn and the most appropriate form will be used according to the quantity:
-
 	i18n.Tn(c, "basement", 333000.333)
-
 will result in "You have 333,000.333 bucks in your basement.".
 
 If you use templates, TemplatesFuncs provides a map of all usable functions.
 Example with package response (https://godoc.org/github.com/volatile/response) package:
-
 	response.TemplatesFuncs(i18n.TemplatesFuncs)
 */
 package i18n
