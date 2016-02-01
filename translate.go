@@ -9,7 +9,7 @@ import (
 
 // T returns the translation associated to key, for the client locale.
 func T(c *core.Context, key string, a ...interface{}) string {
-	return tn(c, key, -1, a)
+	return tn(c, key, -1, a...)
 }
 
 // Tn returns the translation associated to key, for the client locale.
