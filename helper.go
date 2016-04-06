@@ -30,7 +30,9 @@ var TemplatesFuncs = map[string]interface{}{
 	"clientLocale": ClientLocale,
 	"fmtn":         Fmtn,
 	"t":            T,
+	"ht":           HT,
 	"tn":           Tn,
+	"htn":          HTn,
 }
 
 // Translations is a map of translations.
